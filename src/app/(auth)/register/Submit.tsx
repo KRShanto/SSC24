@@ -53,7 +53,7 @@ export default function SubmitButton() {
         return;
       }
 
-      router.push("/");
+      router.push("/create");
       router.refresh();
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {

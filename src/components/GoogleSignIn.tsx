@@ -8,21 +8,19 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-export default function GoogleSignIn() {
+export default function GoogleSignIn({
+  callbackUrl = "/",
+}: {
+  callbackUrl?: string;
+}) {
   const { showError } = useFormErrorStore();
   const router = useRouter();
 
   async function handler() {
     try {
-      // const result = await signInWithPopup(firebaseAuth, googleProvider);
-
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential?.accessToken;
-      // const user = result.user;
-
       // sign in with next-auth
       await signIn("google", {
-        callbackUrl: "/",
+        callbackUrl,
       });
     } catch (error: any) {
       showError({ field: "email", message: error.message });

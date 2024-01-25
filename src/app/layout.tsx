@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Rubik_Doodle_Shadow } from "next/font/google";
+import TopLoader from "@/components/TopLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 const rubik = Rubik_Doodle_Shadow({
@@ -22,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${rubik.variable}`}>{children}</body>
+      <body className={`${inter.className} ${rubik.variable}`}>
+        <TopLoader />
+        {children}
+      </body>
     </html>
   );
 }

@@ -6,6 +6,7 @@ import { useFormErrorStore } from "@/stores/form-error";
 import { useEffect } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useFormStatus } from "react-dom";
+import { cn } from "@/lib/cn";
 
 export function Form({ children }: { children: React.ReactNode }) {
   return (
@@ -58,6 +59,59 @@ export function Input({
   );
 }
 
+export function Switch({
+  label,
+  name,
+  value,
+  setValue,
+  width,
+}: {
+  label: string;
+  name: string;
+  value: boolean;
+  setValue: (value: boolean) => void;
+  width?: number;
+}) {
+  const { error } = useFormErrorStore();
+
+  return (
+    <div className="mt-4">
+      <div className="flex justify-between" style={{ width }}>
+        <label htmlFor={name} className="select-none">
+          {label}
+        </label>
+        <div
+          className="relative ml-5 inline-block h-5 w-14 cursor-pointer"
+          onClick={() => setValue(!value)}
+        >
+          <input
+            type="checkbox"
+            name={name}
+            id={name}
+            checked={value}
+            onChange={(e) => setValue(e.target.checked)}
+            className="hidden"
+          />
+          <span className="absolute left-0 top-0 h-6 w-full rounded-xl bg-slate-300"></span>
+          <span
+            className="absolute top-0 h-6 w-6 transform rounded-full bg-blue-500"
+            style={{
+              transition: "transform 0.2s ease-in-out",
+              transform: value ? "translateX(140%)" : "translateX(0)",
+            }}
+          ></span>
+        </div>
+      </div>
+
+      {error && error.field === name && (
+        <p className="mt-2 animate-pulse text-sm font-semibold text-red-500 transition-all">
+          {error.message}
+        </p>
+      )}
+    </div>
+  );
+}
+
 export function Links({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-6 flex flex-col items-center justify-between">
@@ -83,9 +137,11 @@ export function Link({
 export function Submit({
   children,
   formAction,
+  colorType = "blue",
 }: {
   children: React.ReactNode;
   formAction?: (formData: FormData) => Promise<void>;
+  colorType?: "blue" | "red";
 }) {
   const { pending } = useFormStatus();
   const { clearError } = useFormErrorStore();
@@ -104,7 +160,12 @@ export function Submit({
 
   return (
     <button
-      className="mt-10 flex h-10 w-full items-center justify-center rounded-md border border-blue-700 bg-blue-800 text-lg text-white transition-all active:scale-95"
+      className={cn(
+        "mt-10 flex h-10 w-full items-center justify-center rounded-md border text-lg text-white transition-all active:scale-95",
+
+        colorType === "blue" && "border-blue-700 bg-blue-800 hover:bg-blue-700",
+        colorType === "red" && "border-red-700 bg-red-800 hover:bg-red-700",
+      )}
       type="submit"
       formAction={handler}
     >

@@ -14,7 +14,6 @@ export default function GoogleSignIn({
   callbackUrl?: string;
 }) {
   const { showError } = useFormErrorStore();
-  const router = useRouter();
 
   async function handler() {
     try {

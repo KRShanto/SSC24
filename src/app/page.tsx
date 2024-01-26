@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import Intro from "./home/Intro";
-import DisplaySubjects from "./home/DisplaySubjects";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Welcome to SSC24",
@@ -12,5 +12,10 @@ export default function Home() {
 
   if (!session) return <Intro />;
 
-  return <DisplaySubjects />;
+  return (
+    <>
+      <Navbar />
+      home
+    </>
+  );
 }

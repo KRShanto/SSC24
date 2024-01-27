@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { SUBJECTS } from "@/lib/const";
+import { COLLECTIONS, SUBJECTS } from "@/lib/const";
 import { cn } from "@/lib/cn";
-import { setDoc, doc, collection } from "firebase/firestore";
-import { auth } from "@/lib/auth";
+import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Submit } from "@/components/Form";
 import { useRouter } from "next/navigation";
@@ -16,8 +15,8 @@ export default function CreateForm({ userEmail }: { userEmail: string }) {
   async function handler() {
     if (subjects.length === 0) return;
 
-    const res = await setDoc(doc(collection(db, "subjects")), {
-      userEmail,
+    const docRef = doc(db, COLLECTIONS.SUBJECTS, userEmail);
+    await setDoc(docRef, {
       subjects: subjects.map((subject) => ({
         name: subject,
         completed: 0,

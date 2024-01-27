@@ -2,7 +2,7 @@ import { db, firebaseAuth } from "@/lib/firebase";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { SITE_NAME } from "@/lib/const";
+import { COLLECTIONS, SITE_NAME } from "@/lib/const";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getDoc, collection, setDoc, doc } from "firebase/firestore";
 
@@ -42,7 +42,7 @@ export const {
 
           if (user) {
             // fetch user profile
-            const docRef = doc(db, "users", user.email!);
+            const docRef = doc(db, COLLECTIONS.USERS, user.email!);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
@@ -74,7 +74,7 @@ export const {
         };
 
         try {
-          await setDoc(doc(db, "users", email), {
+          await setDoc(doc(db, COLLECTIONS.USERS, email), {
             name,
             email,
           });

@@ -2,21 +2,13 @@
 
 import { Form, Submit, Switch } from "@/components/Form";
 import { cn } from "@/lib/cn";
-import { Settings } from "@/lib/const";
+import { COLLECTIONS, Settings } from "@/lib/const";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { BiSave } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { db } from "@/lib/firebase";
-import {
-  doc,
-  setDoc,
-  query,
-  where,
-  collection,
-  getDocs,
-} from "firebase/firestore";
-import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 import { revalidate } from "@/actions/revalidate";
 
 export default function SettingsForm({
@@ -32,7 +24,6 @@ export default function SettingsForm({
   const [subjectsColorHighlight, setSubjectsColorHighlight] = useState(
     settings.subjectsColorHighlight,
   );
-  const router = useRouter();
 
   const handleSave = async (formData: FormData) => {
     const newSettings = {
@@ -40,18 +31,9 @@ export default function SettingsForm({
       subjectsColorHighlight,
     };
 
-    const q = query(
-      collection(db, "settings"),
-      where("userEmail", "==", userEmail),
-    );
-
-    const querySnapshot = await getDocs(q);
-    // document should exist
-    if (!querySnapshot.empty) {
-      const docRef = querySnapshot.docs[0].ref;
-      await setDoc(docRef, newSettings, { merge: true });
-      revalidate("/");
-    }
+    const docRef = doc(db, COLLECTIONS.SETTINGS, userEmail);
+    await setDoc(docRef, newSettings, { merge: true });
+    revalidate("/");
   };
 
   const handleSignOut = async (formData: FormData) => {

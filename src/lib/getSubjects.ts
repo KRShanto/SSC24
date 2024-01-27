@@ -1,18 +1,18 @@
-import { DBSubject } from "@/lib/const";
+import { COLLECTIONS, DBSubject } from "@/lib/const";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/firebase";
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-export async function getSubjects(userEmail: string) {
-  // get the subjects from the database
-  const q = query(
-    collection(db, "subjects"),
-    where("userEmail", "==", userEmail),
-  );
-  const querySnapshot = await getDocs(q);
-  const dbSubject = querySnapshot.docs.map((doc) => doc.data())[0] as DBSubject;
+// get the subjects from the database
+export async function getSubjects(
+  userEmail: string,
+  shouldRedirect: boolean = true,
+) {
+  const docRef = doc(db, COLLECTIONS.SUBJECTS, userEmail);
+  const docSnap = await getDoc(docRef);
+  const dbSubject = docSnap.data() as DBSubject;
 
-  if (!dbSubject) {
+  if (!dbSubject && shouldRedirect) {
     redirect("/create");
   }
 

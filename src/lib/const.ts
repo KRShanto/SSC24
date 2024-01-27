@@ -1,5 +1,11 @@
 export const SITE_NAME = "SSC24";
 
+export const COLLECTIONS = {
+  SUBJECTS: "subjects",
+  SETTINGS: "settings",
+  USERS: "users",
+};
+
 export interface Settings {
   emailNotification: boolean;
   subjectsColorHighlight: boolean;
@@ -15,7 +21,6 @@ export interface DBSubject {
     completed: number;
     name: string;
   }[];
-  userEmail: string;
 }
 
 export interface Subject {

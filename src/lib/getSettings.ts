@@ -1,30 +1,17 @@
 import { db } from "./firebase";
-import {
-  getDoc,
-  setDoc,
-  doc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { DEFAULT_SETTINGS } from "./const";
+import { getDoc, setDoc, doc } from "firebase/firestore";
+import { COLLECTIONS, DEFAULT_SETTINGS } from "./const";
 
-// Get settings from `settings` collection. where `userEmail` is equal to `userEmail`
+// Get settings from firestore
 // If there is no settings, create one and return default settings
 export async function getSettings(userEmail: string) {
-  const q = query(
-    collection(db, "settings"),
-    where("userEmail", "==", userEmail),
-  );
-  const querySnapshot = await getDocs(q);
+  const docRef = doc(db, COLLECTIONS.SETTINGS, userEmail);
+  const docSnap = await getDoc(docRef);
 
-  if (querySnapshot.empty) {
-    const docRef = doc(collection(db, "settings"));
-    await setDoc(docRef, { ...DEFAULT_SETTINGS, userEmail });
+  if (!docSnap.exists()) {
+    await setDoc(docRef, { ...DEFAULT_SETTINGS });
     return DEFAULT_SETTINGS;
   } else {
-    const doc = querySnapshot.docs[0];
-    return doc.data();
+    return docSnap.data();
   }
 }

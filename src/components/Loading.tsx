@@ -1,7 +1,19 @@
 "use client";
 
 import EmailSendingAnimation from "@/../public/Loading.json";
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import dynamic from "next/dynamic";
+const Player = dynamic(
+  async () => (await import("@lottiefiles/react-lottie-player")).Player,
+  {
+    ssr: false,
+  },
+);
+const Controls = dynamic(
+  async () => (await import("@lottiefiles/react-lottie-player")).Controls,
+  {
+    ssr: false,
+  },
+);
 
 export default function Loading() {
   return (

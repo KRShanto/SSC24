@@ -1,18 +1,8 @@
 import React from "react";
-import { db } from "@/lib/firebase";
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  doc,
-  getDoc,
-} from "firebase/firestore";
 import { cn } from "@/lib/cn";
 import ChangeForm from "./ChangeForm";
-import { DBSubject } from "@/lib/const";
-import { redirect } from "next/navigation";
 import { getSettings } from "@/lib/getSettings";
+import { getSubjects } from "@/lib/getSubjects";
 
 export default async function DisplaySubjects({
   userEmail,
@@ -20,16 +10,7 @@ export default async function DisplaySubjects({
   userEmail: string;
 }) {
   // get the subjects from the database
-  const q = query(
-    collection(db, "subjects"),
-    where("userEmail", "==", userEmail),
-  );
-  const querySnapshot = await getDocs(q);
-  const dbSubject = querySnapshot.docs.map((doc) => doc.data())[0] as DBSubject;
-  if (!dbSubject) {
-    redirect("/create");
-  }
-
+  const dbSubject = await getSubjects(userEmail);
   // get the settings from the database
   const settings = await getSettings(userEmail);
 

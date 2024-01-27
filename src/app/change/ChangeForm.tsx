@@ -7,9 +7,16 @@ import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Submit } from "@/components/Form";
 import { useRouter } from "next/navigation";
+import { revalidate } from "@/actions/revalidate";
 
-export default function CreateForm({ userEmail }: { userEmail: string }) {
-  const [subjects, setSubjects] = useState<string[]>([]);
+export default function ChangeForm({
+  userEmail,
+  subjects: oldSubjects,
+}: {
+  userEmail: string;
+  subjects: string[];
+}) {
+  const [subjects, setSubjects] = useState<string[]>(oldSubjects);
   const router = useRouter();
 
   async function handler() {
@@ -23,6 +30,7 @@ export default function CreateForm({ userEmail }: { userEmail: string }) {
       })),
     });
 
+    revalidate("/");
     router.push("/");
   }
 
@@ -50,6 +58,7 @@ export default function CreateForm({ userEmail }: { userEmail: string }) {
                   }
                 }}
               />
+
               <label
                 htmlFor={subject.name}
                 className={cn(

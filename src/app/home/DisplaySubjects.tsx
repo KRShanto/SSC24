@@ -41,7 +41,9 @@ export default async function DisplaySubjects({
               generateColor(subject.completed),
             )}
           >
-            <h2 className="text-2xl  font-bold">{subject.name}</h2>
+            <h2 className="text-2xl  font-bold text-slate-300">
+              {subject.name}
+            </h2>
             <ChangeForm subject={subject} userEmail={userEmail} />
           </div>
         ))}

@@ -16,6 +16,8 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { revalidate } from "@/actions/revalidate";
 
 export default function SettingsForm({
   settings,
@@ -30,6 +32,7 @@ export default function SettingsForm({
   const [subjectsColorHighlight, setSubjectsColorHighlight] = useState(
     settings.subjectsColorHighlight,
   );
+  const router = useRouter();
 
   const handleSave = async (formData: FormData) => {
     const newSettings = {
@@ -47,11 +50,12 @@ export default function SettingsForm({
     if (!querySnapshot.empty) {
       const docRef = querySnapshot.docs[0].ref;
       await setDoc(docRef, newSettings, { merge: true });
+      revalidate("/");
     }
   };
 
   const handleSignOut = async (formData: FormData) => {
-    await signOut();
+    await signOut({ callbackUrl: "/" });
   };
 
   return (

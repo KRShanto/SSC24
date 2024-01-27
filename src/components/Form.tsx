@@ -92,12 +92,13 @@ export function Switch({
             onChange={(e) => setValue(e.target.checked)}
             className="hidden"
           />
-          <span className="absolute left-0 top-0 h-6 w-full rounded-xl bg-slate-300"></span>
+          <span className="absolute left-0 top-0 h-6 w-full rounded-xl bg-slate-400"></span>
           <span
-            className="absolute top-0 h-6 w-6 transform rounded-full bg-blue-500"
+            className="absolute top-0 h-6 w-6 transform rounded-full"
             style={{
               transition: "transform 0.2s ease-in-out",
               transform: value ? "translateX(140%)" : "translateX(0)",
+              backgroundColor: value ? "#0054ad" : "#24304d",
             }}
           ></span>
         </div>
@@ -138,10 +139,12 @@ export function Submit({
   children,
   formAction,
   colorType = "blue",
+  className,
 }: {
   children: React.ReactNode;
   formAction?: (formData: FormData) => Promise<void>;
   colorType?: "blue" | "red";
+  className?: string;
 }) {
   const { pending } = useFormStatus();
   const { clearError } = useFormErrorStore();
@@ -165,6 +168,7 @@ export function Submit({
 
         colorType === "blue" && "border-blue-700 bg-blue-800 hover:bg-blue-700",
         colorType === "red" && "border-red-700 bg-red-800 hover:bg-red-700",
+        className,
       )}
       type="submit"
       formAction={handler}

@@ -7,9 +7,11 @@ import { setDoc, doc, collection } from "firebase/firestore";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/firebase";
 import { Submit } from "@/components/Form";
+import { useRouter } from "next/navigation";
 
 export default function CreateForm({ userEmail }: { userEmail: string }) {
   const [subjects, setSubjects] = useState<string[]>([]);
+  const router = useRouter();
 
   async function handler() {
     if (subjects.length === 0) return;
@@ -22,7 +24,7 @@ export default function CreateForm({ userEmail }: { userEmail: string }) {
       })),
     });
 
-    console.log(res);
+    router.push("/");
   }
 
   return (

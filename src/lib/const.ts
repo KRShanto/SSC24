@@ -10,6 +10,14 @@ export const DEFAULT_SETTINGS = {
   subjectsColorHighlight: true,
 };
 
+export interface DBSubject {
+  subjects: {
+    completed: number;
+    name: string;
+  }[];
+  userEmail: string;
+}
+
 export interface Subject {
   name: string;
   date: Date;

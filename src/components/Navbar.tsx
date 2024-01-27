@@ -6,15 +6,19 @@ import { usePathname } from "next/navigation";
 import { FaHome } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { IoMdTimer } from "react-icons/io";
+import Logo from "./Logo";
 
 export default function Navbar() {
   const pathname = usePathname();
 
   return (
     <div>
-      {/* Navbar */}
+      <h1 className="mt-5 text-center text-4xl">
+        <Logo />
+      </h1>
+
       <div>
-        <nav className="mt-5 flex items-center justify-center text-2xl font-bold uppercase text-slate-300 ">
+        <nav className="mt-2 flex items-center justify-center text-2xl font-bold uppercase text-slate-300 ">
           <Link
             href="/"
             className={cn(

@@ -24,7 +24,7 @@ export default function Login() {
 
       <SubmitButton />
 
-      <GoogleSignIn />
+      <GoogleSignIn callbackUrl="/create" />
     </Form>
   );
 }

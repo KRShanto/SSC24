@@ -37,11 +37,11 @@ export default function ChangeForm({
   return (
     <form>
       <div className="flex flex-col space-y-2">
-        <h2 className="mt-5 text-center text-2xl text-slate-300">
+        <h2 className="mt-5 text-center text-2xl text-slate-300 max-[600px]:text-xl">
           Select the subjects you want to track your progress in.
         </h2>
 
-        <div className="mx-auto flex w-[900px] flex-wrap justify-center gap-5">
+        <div className="mx-auto flex w-[900px] flex-wrap justify-center gap-5 max-[1000px]:w-[90vw] max-[1000px]:gap-3 max-[600px]:gap-2">
           {SUBJECTS.map((subject, index) => (
             <div key={index} className="mt-5">
               <input
@@ -62,7 +62,7 @@ export default function ChangeForm({
               <label
                 htmlFor={subject.name}
                 className={cn(
-                  "cursor-pointer select-none rounded-md px-5 py-2 text-2xl transition-all",
+                  "cursor-pointer select-none rounded-md px-5 py-2 text-2xl transition-all max-[1000px]:px-4 max-[1000px]:text-xl max-[600px]:text-lg",
                   {
                     "border border-blue-500 bg-blue-800 text-white":
                       subjects.includes(subject.name),
@@ -79,7 +79,7 @@ export default function ChangeForm({
         </div>
       </div>
 
-      <div className="mx-auto mt-20 w-[200px]">
+      <div className="mx-auto mb-10 mt-20 w-[200px] max-[600px]:mt-14 max-[600px]:w-[150px]">
         <Submit formAction={handler}>Submit</Submit>
       </div>
     </form>

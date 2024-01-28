@@ -29,11 +29,11 @@ export default function GoogleSignIn({
 
   return (
     <button
-      className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-800 text-lg text-white transition-all active:scale-95"
+      className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-md border border-slate-700 bg-slate-800 text-lg text-white transition-all active:scale-95 max-[500px]:h-8 max-[500px]:text-base"
       type="button"
       onClick={handler}
     >
-      <Image alt="Google Icon" src="/google.svg" width={20} height={20} />
+      <Image alt="Google Icon" src="/google.svg" width={15} height={15} />
       Sign in with Google
     </button>
   );

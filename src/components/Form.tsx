@@ -10,14 +10,20 @@ import { cn } from "@/lib/cn";
 
 export function Form({ children }: { children: React.ReactNode }) {
   return (
-    <form className="mx-auto mt-52 w-[35rem] rounded-md border border-slate-700 p-5">
-      {children}
-    </form>
+    <div className="flex h-screen items-center justify-center">
+      <form className="relative mx-auto w-[35rem] rounded-md border border-slate-700 p-5 max-[600px]:w-[90vw]">
+        {children}
+      </form>
+    </div>
   );
 }
 
 export function Title({ children }: { children: React.ReactNode }) {
-  return <h1 className="my-5 text-center text-3xl font-bold">{children}</h1>;
+  return (
+    <h1 className="my-5 text-center text-3xl font-bold max-[500px]:text-2xl">
+      {children}
+    </h1>
+  );
 }
 
 export function Input({
@@ -37,7 +43,10 @@ export function Input({
 
   return (
     <div className="mt-4">
-      <label htmlFor={name} className="text-lg font-bold">
+      <label
+        htmlFor={name}
+        className="text-lg font-bold text-slate-300 max-[500px]:text-base"
+      >
         {label}
       </label>
 
@@ -45,7 +54,7 @@ export function Input({
         id={name}
         name={name}
         type={type}
-        className="mt-1 block w-full rounded-md border border-slate-700 bg-transparent p-2 text-lg text-slate-300 outline-none focus:border-blue-500"
+        className="mt-1 block w-full rounded-md border border-slate-700 bg-transparent p-2 text-lg text-slate-300 outline-none focus:border-blue-500 max-[500px]:text-base"
         required={required}
         autoFocus={autoFocus}
       />
@@ -70,18 +79,22 @@ export function Switch({
   name: string;
   value: boolean;
   setValue: (value: boolean) => void;
-  width?: number;
+  width?: number | string;
 }) {
   const { error } = useFormErrorStore();
 
   return (
     <div className="mt-4">
-      <div className="flex justify-between" style={{ width }}>
-        <label htmlFor={name} className="select-none">
+      <div className="flex items-center justify-between" style={{ width }}>
+        <label
+          htmlFor={name}
+          className="select-none text-xl max-[600px]:text-lg max-[350px]:text-base"
+        >
           {label}
         </label>
+
         <div
-          className="relative ml-5 inline-block h-5 w-14 cursor-pointer"
+          className="relative inline-block w-14 cursor-pointer max-[600px]:w-9"
           onClick={() => setValue(!value)}
         >
           <input
@@ -92,20 +105,20 @@ export function Switch({
             onChange={(e) => setValue(e.target.checked)}
             className="hidden"
           />
-          <span className="absolute left-0 top-0 h-6 w-full rounded-xl bg-slate-400"></span>
+          <span className="absolute left-0 top-1/2 h-6 w-full -translate-y-1/2 transform rounded-xl bg-slate-400 max-[600px]:h-4"></span>
           <span
-            className="absolute top-0 h-6 w-6 transform rounded-full"
-            style={{
-              transition: "transform 0.2s ease-in-out",
-              transform: value ? "translateX(140%)" : "translateX(0)",
-              backgroundColor: value ? "#0054ad" : "#24304d",
-            }}
+            className={cn(
+              "absolute top-1/2 h-6 w-6 -translate-y-1/2 transform rounded-full transition-all max-[600px]:h-4 max-[600px]:w-4",
+              value
+                ? "translate-x-8 bg-blue-500 max-[600px]:translate-x-6"
+                : "translate-x-0 bg-slate-700",
+            )}
           ></span>
         </div>
       </div>
 
       {error && error.field === name && (
-        <p className="mt-2 animate-pulse text-sm font-semibold text-red-500 transition-all">
+        <p className="mt-1 animate-pulse text-sm font-semibold text-red-500 transition-all">
           {error.message}
         </p>
       )}
@@ -164,8 +177,7 @@ export function Submit({
   return (
     <button
       className={cn(
-        "mt-10 flex h-10 w-full items-center justify-center rounded-md border text-lg text-white transition-all active:scale-95",
-
+        "mt-10 flex h-10 w-full items-center justify-center rounded-md border text-lg text-white transition-all active:scale-95 max-[500px]:h-8 max-[500px]:text-base",
         colorType === "blue" && "border-blue-700 bg-blue-800 hover:bg-blue-700",
         colorType === "red" && "border-red-700 bg-red-800 hover:bg-red-700",
         className,

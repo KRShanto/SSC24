@@ -32,16 +32,16 @@ export default async function DisplaySubjects({
 
   return (
     <div>
-      <div className="mb-10 mt-10 flex flex-col items-center gap-7">
+      <div className="mb-10 mt-10 flex flex-col items-center gap-7 max-[800px]:gap-4">
         {dbSubject.subjects.map((subject, index) => (
           <div
             key={index}
             className={cn(
-              "w-[40rem] rounded-md border-2 px-3 py-3",
+              "w-[40rem] rounded-md border-2 px-3 py-3 max-[800px]:w-[90vw] max-[800px]:border max-[800px]:px-2 max-[800px]:py-2",
               generateColor(subject.completed),
             )}
           >
-            <h2 className="text-2xl  font-bold text-slate-300">
+            <h2 className="text-2xl font-bold text-slate-300 max-[800px]:text-xl">
               {subject.name}
             </h2>
             <ChangeForm subject={subject} userEmail={userEmail} />

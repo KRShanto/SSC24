@@ -45,12 +45,16 @@ export default async function RoutienPage() {
     <div>
       <Navbar />
 
-      <table className="mx-auto mt-5 w-[1000px] text-xl text-slate-300">
-        <thead className="">
+      <table className="mx-auto mb-10 mt-5 w-[1000px] text-xl text-slate-300 max-[1100px]:w-[90vw] max-[600px]:text-lg">
+        <thead>
           <tr>
-            <th className="border border-slate-800 px-4 py-2 text-2xl">Date</th>
-            <th className="border border-slate-800 px-4 py-2 text-2xl">Day</th>
-            <th className="border border-slate-800 px-4 py-2 text-2xl">
+            <th className="border border-slate-800 px-4 py-2 text-2xl max-[600px]:px-2 max-[600px]:py-1 max-[600px]:text-xl">
+              Date
+            </th>
+            <th className="border border-slate-800 px-4 py-2 text-2xl max-[600px]:px-2 max-[600px]:py-1 max-[600px]:text-xl">
+              Day
+            </th>
+            <th className="border border-slate-800 px-4 py-2 text-2xl max-[600px]:px-2 max-[600px]:py-1 max-[600px]:text-xl">
               Subject
             </th>
           </tr>
@@ -62,17 +66,13 @@ export default async function RoutienPage() {
             );
             return (
               <tr key={index} className={cn(subject ? "bg-slate-900" : "")}>
-                <td className="border border-slate-800 px-5 py-3">
-                  {/* {moment(date).format("DD, MMMM")} */}
-                  {
-                    // format: date would be like 15th February, 3rd March ....
-                    moment(date).format("Do MMMM")
-                  }
+                <td className="border border-slate-800 px-5 py-3 max-[600px]:px-3 max-[600px]:py-2">
+                  {moment(date).format("Do MMMM")}
                 </td>
-                <td className="border border-slate-800 px-5 py-3">
+                <td className="border border-slate-800 px-5 py-3 max-[600px]:px-3 max-[600px]:py-2">
                   {date.toLocaleString("default", { weekday: "long" })}
                 </td>
-                <td className="border border-slate-800 px-5 py-3">
+                <td className="border border-slate-800 px-5 py-3 max-[600px]:px-3 max-[600px]:py-2">
                   {subject ? subject.name : " "}
                 </td>
               </tr>

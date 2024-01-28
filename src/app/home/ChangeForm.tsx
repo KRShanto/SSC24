@@ -13,6 +13,8 @@ import {
   collection,
 } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { getSubjects } from "@/lib/getSubjects";
+import { COLLECTIONS } from "@/lib/const";
 
 export default function ChangeForm({
   subject,
@@ -33,18 +35,13 @@ export default function ChangeForm({
     // check if completed is the previous value
     if (completed === subject.completed) return;
 
-    const q = query(
-      collection(db, "subjects"),
-      where("userEmail", "==", userEmail),
-    );
-    const querySnapshot = await getDocs(q);
-    const docRef = querySnapshot.docs[0].ref;
-    const data = querySnapshot.docs[0].data();
+    const dbSubject = await getSubjects(userEmail);
+    const docRef = doc(db, COLLECTIONS.SUBJECTS, userEmail);
     const newSubject = {
       name: subject.name,
       completed,
     };
-    const newSubjects = data.subjects.map((subject: any) => {
+    const newSubjects = dbSubject.subjects.map((subject: any) => {
       if (subject.name === newSubject.name) {
         return newSubject;
       } else {
@@ -57,7 +54,7 @@ export default function ChangeForm({
 
   return (
     <form className="mt-3 flex items-center justify-between gap-5 text-slate-300">
-      <p className="inline text-lg">{completed}%</p>
+      <p className="inline text-lg max-[800px]:text-base">{completed}%</p>
       <input
         type="range"
         min="0"
@@ -69,7 +66,10 @@ export default function ChangeForm({
         }}
       />
 
-      <Submit formAction={handleSubmit} className="mt-0 h-7 w-20">
+      <Submit
+        formAction={handleSubmit}
+        className="mt-0 h-7 w-20 max-[800px]:h-6 max-[800px]:w-16"
+      >
         <FaSave />
       </Submit>
     </form>

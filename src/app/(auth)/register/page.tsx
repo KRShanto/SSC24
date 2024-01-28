@@ -5,7 +5,19 @@ import SubmitButton from "./Submit";
 import GoogleSignIn from "@/components/GoogleSignIn";
 
 export const metadata = {
-  title: `Register | ${SITE_NAME}`,
+  title: `Register`,
+  description: `Register to ${SITE_NAME}`,
+  keywords: ["register", `register to ${SITE_NAME}`],
+  alternates: {
+    canonical: "/register",
+  },
+  openGraph: {
+    title: `Register`,
+    description: `Register to ${SITE_NAME}`,
+    url: process.env.NEXT_PUBLIC_URL + "/register",
+    type: "website",
+    siteName: SITE_NAME,
+  },
 };
 
 export default function Register() {

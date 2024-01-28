@@ -5,7 +5,19 @@ import SubmitButton from "./Submit";
 import GoogleSignIn from "@/components/GoogleSignIn";
 
 export const metadata = {
-  title: `Login | ${SITE_NAME}`,
+  title: `Login`,
+  description: `Login to ${SITE_NAME}`,
+  keywords: ["login", `login to ${SITE_NAME}`],
+  alternates: {
+    canonical: "/login",
+  },
+  openGraph: {
+    title: `Login`,
+    description: `Login to ${SITE_NAME}`,
+    url: process.env.NEXT_PUBLIC_URL + "/login",
+    type: "website",
+    siteName: SITE_NAME,
+  },
 };
 
 export default function Login() {

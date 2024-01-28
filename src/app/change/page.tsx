@@ -4,6 +4,16 @@ import { getSubjects } from "@/lib/getSubjects";
 import React from "react";
 import NoSubject from "./NoSubject";
 import ChangeForm from "./ChangeForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Change Subjects",
+  description: "Change your subjects",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function ChangePage() {
   const session = await auth();

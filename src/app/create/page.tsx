@@ -7,7 +7,12 @@ import AlreadyHaveMessage from "./AlreadyHaveMessage";
 import { getSubjects } from "@/lib/getSubjects";
 
 export const metadata = {
-  title: `Create Subjects | ${SITE_NAME}`,
+  title: `Create Subjects`,
+  description: `Create your subjects`,
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function CreatePage() {

@@ -6,6 +6,16 @@ import moment from "moment";
 import { getSubjects } from "@/lib/getSubjects";
 import { auth } from "@/lib/auth";
 import Intro from "../home/Intro";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Routine",
+  description: "Routine of the exam",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function RoutienPage() {
   const session = await auth();

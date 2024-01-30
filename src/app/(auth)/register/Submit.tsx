@@ -8,6 +8,7 @@ import { firebaseAuth, db } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { signIn } from "next-auth/react";
+import { sendWelcomeEmail } from "@/actions/sendWelcomeEmail";
 
 export default function SubmitButton() {
   const { showError } = useFormErrorStore();
@@ -17,13 +18,6 @@ export default function SubmitButton() {
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-
-    const res = await register({ name, email, password });
-
-    if (res.error) {
-      showError(res.error);
-      return;
-    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -52,6 +46,9 @@ export default function SubmitButton() {
         showError({ field: "email", message: res.error });
         return;
       }
+
+      // Send welcome email
+      await sendWelcomeEmail({ name, email });
 
       router.push("/create");
       router.refresh();

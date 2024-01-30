@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { COLLECTIONS, SITE_NAME } from "@/lib/const";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getDoc, collection, setDoc, doc } from "firebase/firestore";
+import { sendWelcomeEmail } from "@/actions/sendWelcomeEmail";
 
 export const {
   handlers: { GET, POST },
@@ -38,8 +39,6 @@ export const {
           );
           const user = userCredential.user;
 
-          console.log(user);
-
           if (user) {
             // fetch user profile
             const docRef = doc(db, COLLECTIONS.USERS, user.email!);
@@ -52,6 +51,7 @@ export const {
                 picture: user.photoURL,
               };
             } else {
+              // This should never happen
               return null;
             }
           } else {
@@ -74,10 +74,20 @@ export const {
         };
 
         try {
-          await setDoc(doc(db, COLLECTIONS.USERS, email), {
-            name,
-            email,
-          });
+          // try to get user's profile
+          const docRef = doc(db, COLLECTIONS.USERS, email);
+          const docSnap = await getDoc(docRef);
+
+          if (!docSnap.exists()) {
+            // create user profile
+            await setDoc(doc(db, COLLECTIONS.USERS, email), {
+              name,
+              email,
+            });
+
+            // Send welcome email
+            await sendWelcomeEmail({ name, email });
+          }
         } catch (error) {
           console.log(error);
         }

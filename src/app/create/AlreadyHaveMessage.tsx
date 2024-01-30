@@ -10,7 +10,7 @@ export default function AlreadyHaveMessage() {
         Subjects already created
       </h2>
 
-      <div className="mt-10 flex justify-center gap-5">
+      <div className="mt-10 flex items-center justify-center gap-5 max-[600px]:flex-col max-[600px]:gap-0">
         <Link
           href="/"
           className="mt-5 flex w-[180px] items-center justify-center gap-2 rounded-md bg-blue-500 py-2 text-xl font-semibold text-white max-[600px]:w-[150px] max-[600px]:py-1 max-[600px]:text-lg"

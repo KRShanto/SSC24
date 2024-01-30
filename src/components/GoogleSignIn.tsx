@@ -8,18 +8,14 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
-export default function GoogleSignIn({
-  callbackUrl = "/",
-}: {
-  callbackUrl?: string;
-}) {
+export default function GoogleSignIn() {
   const { showError } = useFormErrorStore();
 
   async function handler() {
     try {
       // sign in with next-auth
       await signIn("google", {
-        callbackUrl,
+        callbackUrl: "/",
       });
     } catch (error: any) {
       showError({ field: "email", message: error.message });

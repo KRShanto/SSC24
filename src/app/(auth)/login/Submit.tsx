@@ -3,8 +3,6 @@
 import { Submit } from "@/components/Form";
 import { useFormErrorStore } from "@/stores/form-error";
 import { useRouter } from "next/navigation";
-import { firebaseAuth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { signIn } from "next-auth/react";
 
 export default function SubmitButton() {

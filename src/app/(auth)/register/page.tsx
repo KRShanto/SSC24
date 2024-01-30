@@ -37,7 +37,7 @@ export default function Register() {
 
       <SubmitButton />
 
-      <GoogleSignIn callbackUrl="/create" />
+      <GoogleSignIn />
     </Form>
   );
 }

@@ -11,17 +11,11 @@ export async function sendEmail({
   subject,
   text,
   html,
-  attachments,
 }: {
   to: string;
   subject: string;
   text: string;
   html?: string;
-  attachments?: {
-    filename: string;
-    path: string;
-    cid?: string;
-  }[];
 }) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -37,7 +31,6 @@ export async function sendEmail({
     subject,
     text,
     html,
-    attachments,
   };
 
   try {

@@ -2,7 +2,6 @@
 
 import { SITE_NAME } from "@/lib/const";
 import { sendEmail } from "@/lib/sendEmail";
-import path from "path";
 
 export async function sendWelcomeEmail({
   name,
@@ -27,8 +26,6 @@ export async function sendWelcomeEmail({
           <p style="font-size: 18px; line-height: 1.6;">Best of luck for your exam!</p>
 
           <p style="font-size: 18px; line-height: 1.6;">Warm Regards,<br>The <strong>${SITE_NAME}</strong> Team</p>       
-
-          <img src="cid:unique@kreata.ee" style="width:100%; max-width: 400px; display: block; margin: auto;"/>
       </div>`,
     text: `
       Welcome Aboard, ${name}!
@@ -43,13 +40,6 @@ export async function sendWelcomeEmail({
 
       Warm Regards,
       The ${SITE_NAME} Team`,
-    attachments: [
-      {
-        filename: "opengraph.png",
-        path: path.join(process.cwd(), "/public/opengraph-image.png"),
-        cid: "unique@kreata.ee", //same cid value as in the html img src
-      },
-    ],
   };
 
   await sendEmail(mailOptions);

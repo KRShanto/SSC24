@@ -10,7 +10,7 @@ export default async function DisplaySubjects({
   userEmail: string;
 }) {
   // get the subjects from the database
-  const dbSubject = await getSubjects(userEmail);
+  const subjects = await getSubjects(userEmail);
   // get the settings from the database
   const settings = await getSettings(userEmail);
 
@@ -33,7 +33,7 @@ export default async function DisplaySubjects({
   return (
     <div>
       <div className="mb-10 mt-10 flex flex-col items-center gap-7 max-[800px]:gap-4">
-        {dbSubject.subjects.map((subject, index) => (
+        {subjects!.map((subject, index) => (
           <div
             key={index}
             className={cn(

@@ -22,9 +22,8 @@ export default async function RoutienPage() {
 
   if (!session) return <Intro />;
 
-  const dbSubject = await getSubjects(session.user?.email!);
-  const subjects = dbSubject.subjects;
-  const subjectsWithDate = subjects.map((subject) => {
+  const subjects = await getSubjects(session.user?.email!);
+  const subjectsWithDate = subjects!.map((subject) => {
     const date = SUBJECTS.find((s) => s.name === subject.name)?.date;
     return {
       ...subject,

@@ -16,5 +16,5 @@ export async function getSubjects(
     redirect("/create");
   }
 
-  return dbSubject;
+  return dbSubject ? dbSubject.subjects : null;
 }

@@ -35,13 +35,13 @@ export default function ChangeForm({
     // check if completed is the previous value
     if (completed === subject.completed) return;
 
-    const dbSubject = await getSubjects(userEmail);
+    const subjects = await getSubjects(userEmail);
     const docRef = doc(db, COLLECTIONS.SUBJECTS, userEmail);
     const newSubject = {
       name: subject.name,
       completed,
     };
-    const newSubjects = dbSubject.subjects.map((subject: any) => {
+    const newSubjects = subjects?.map((subject) => {
       if (subject.name === newSubject.name) {
         return newSubject;
       } else {

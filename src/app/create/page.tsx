@@ -21,9 +21,9 @@ export default async function CreatePage() {
   if (!session) return <UnAuthenticated />;
 
   // Check if the user has already created subjects
-  const dbSubject = await getSubjects(session.user?.email!, false);
+  const subjects = await getSubjects(session.user?.email!, false);
 
-  if (dbSubject) return <AlreadyHaveMessage />;
+  if (subjects) return <AlreadyHaveMessage />;
 
   return <CreateForm userEmail={session.user?.email!} />;
 }

@@ -21,11 +21,13 @@ export default async function ChangePage() {
   if (!session) return <UnAuthenticated />;
 
   // Check if the user has already created subjects
-  const dbSubject = await getSubjects(session.user?.email!, false);
+  const subjects = await getSubjects(session.user?.email!, false);
 
-  if (!dbSubject) return <NoSubject />;
+  if (!subjects) return <NoSubject />;
 
-  const subjects = dbSubject.subjects.map((subject) => subject.name);
+  const subjectsNames = subjects.map((subject) => subject.name);
 
-  return <ChangeForm userEmail={session.user?.email!} subjects={subjects} />;
+  return (
+    <ChangeForm userEmail={session.user?.email!} subjects={subjectsNames} />
+  );
 }

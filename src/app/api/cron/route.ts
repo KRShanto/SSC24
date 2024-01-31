@@ -5,9 +5,19 @@ import { getSubjects } from "@/lib/getSubjects";
 import moment from "moment";
 import { sendEmail } from "@/lib/sendEmail";
 import { getSettings } from "@/lib/getSettings";
+import { headers } from "next/headers";
 
 // Send email to all users to let them know about their progress and upcoming exams
-export async function POST() {
+export async function GET() {
+  const headersList = headers();
+  const authorization = headersList.get("authorization");
+  const secret = process.env.CRON_SECRET;
+
+  // Check if the request is coming from the cron job
+  if (authorization !== `Bearer ${secret}`) {
+    return new Response("Not authorized", { status: 401 });
+  }
+
   // Get all users
   const snapshot = await getDocs(collection(db, COLLECTIONS.USERS));
   const users = snapshot.docs.map((doc) => doc.data());
@@ -173,5 +183,5 @@ export async function POST() {
     });
   }
 
-  return new Response("Hello world");
+  return new Response("Emails sent", { status: 200 });
 }

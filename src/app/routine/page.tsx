@@ -54,7 +54,7 @@ export default async function RoutienPage() {
     <div>
       <Navbar />
 
-      <table className="mx-auto mb-10 mt-5 w-[1000px] text-xl text-slate-300 max-[1100px]:w-[90vw] max-[600px]:text-lg">
+      <table className="mx-auto mb-10 mt-5 w-[1000px] text-xl text-slate-300 max-[1100px]:w-[90vw] max-[600px]:text-base">
         <thead>
           <tr>
             <th className="border border-slate-800 px-4 py-2 text-2xl max-[600px]:px-2 max-[600px]:py-1 max-[600px]:text-xl">

@@ -108,10 +108,12 @@ export async function GET() {
 
       // Find the difference between today and the next subject
       const diffDays = moment(nextSubject.date).diff(moment(), "days");
+      // If the next subject is 0, return tomorrow
+      const days = diffDays === 0 ? "tomorrow" : `${diffDays} days`;
 
       // If there's a next subject, tell the user how many days are left for the next exam and their progress
       if (nextSubject && nextSubject.date) {
-        subject = `Your next exam is on ${nextSubject.name} in ${diffDays} days`;
+        subject = `Your next exam is on ${nextSubject.name} in ${days}`;
         text = `Hello ${user.name}, your next exam is on ${nextSubject.name} in ${diffDays} days. Keep up the good work!`;
         html = `
           <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-width: 600px; margin: auto; border-radius: 10px;">

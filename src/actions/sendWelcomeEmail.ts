@@ -3,6 +3,12 @@
 import { SITE_NAME } from "@/lib/const";
 import { sendEmail } from "@/lib/sendEmail";
 
+/**
+ * Sends a welcome email to a new user.
+ *
+ * @param params - The parameters for sending the email.
+ * @returns A Promise that resolves when the email has been sent.
+ */
 export async function sendWelcomeEmail({
   name,
   email,

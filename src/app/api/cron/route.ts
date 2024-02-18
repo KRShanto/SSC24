@@ -1,7 +1,6 @@
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { SUBJECTS, COLLECTIONS, SITE_NAME } from "@/lib/const";
-import { getSubjects } from "@/lib/getSubjects";
+import { COLLECTIONS, SITE_NAME } from "@/lib/const";
 import moment from "moment";
 import { sendEmail } from "@/lib/sendEmail";
 import { getSettings } from "@/lib/getSettings";
@@ -10,13 +9,9 @@ import { getUpcomingSubjects } from "@/lib/getUpcomingSubjects";
 
 // Send email to all users to let them know about their progress and upcoming exams
 export async function GET() {
-  const headersList = headers();
-  const authorization = headersList.get("authorization");
-  const secret = process.env.CRON_SECRET;
-
-  // Check if the request is coming from the cron job
-  if (authorization !== `Bearer ${secret}`) {
-    return new Response("Not authorized", { status: 401 });
+  const isValid = await checkValidation();
+  if (!isValid) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
   // Get all users
@@ -30,32 +25,6 @@ export async function GET() {
 
     // If email notification is disabled, skip this user
     if (!settings.emailNotification) continue;
-
-    // // Get all subjects for this user
-    // const subjects = await getSubjects(user.email, false);
-
-    // // If there's no subject, skip this user
-    // if (!subjects) continue;
-
-    // // Add the date of each subject to the subject object
-    // const subjectsWithDate = subjects.map((subject) => {
-    //   const subjectWithDate = SUBJECTS.find(
-    //     (subjectWithDate) => subjectWithDate.name === subject.name,
-    //   );
-    //   return { ...subjectWithDate, ...subject };
-    // });
-
-    // // Get today's date
-    // const today = new Date();
-    // today.setHours(0, 0, 0, 0);
-
-    // // Find all upcoming subjects
-    // const upcomingSubjects = subjectsWithDate.filter((subject) => {
-    //   if (subject && subject.date) {
-    //     return subject.date.getTime() >= today.getTime();
-    //   }
-    //   return false;
-    // });
 
     // Get the upcoming subjects for this user
     const upcomingSubjects = await getUpcomingSubjects({
@@ -200,4 +169,18 @@ export async function GET() {
   }
 
   return new Response("Emails sent", { status: 200 });
+}
+
+// Check if the request is valid
+async function checkValidation() {
+  const headersList = headers();
+  const authorization = headersList.get("authorization");
+  const secret = process.env.CRON_SECRET;
+
+  // Check if the request is coming from the cron job
+  if (authorization !== `Bearer ${secret}`) {
+    return false;
+  }
+
+  return true;
 }

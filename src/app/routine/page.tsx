@@ -74,7 +74,16 @@ export default async function RoutienPage() {
               (subject) => subject.date.toDateString() === date.toDateString(),
             );
             return (
-              <tr key={index} className={cn(subject ? "bg-slate-900" : "")}>
+              <tr
+                key={index}
+                className={cn(
+                  subject ? "bg-slate-900" : "",
+                  // check if the date is passed
+                  date.getTime() < new Date().getTime()
+                    ? "bg-slate-950 text-gray-700"
+                    : "text-slate-300",
+                )}
+              >
                 <td className="border border-slate-800 px-5 py-3 max-[600px]:px-3 max-[600px]:py-2">
                   {moment(date).format("Do MMMM")}
                 </td>

@@ -3,14 +3,18 @@ import { cn } from "@/lib/cn";
 import ChangeForm from "./ChangeForm";
 import { getSettings } from "@/lib/getSettings";
 import { getSubjects } from "@/lib/getSubjects";
+import { SUBJECTS } from "@/lib/const";
+import { getUpcomingSubjects } from "@/lib/getUpcomingSubjects";
 
 export default async function DisplaySubjects({
   userEmail,
 }: {
   userEmail: string;
 }) {
-  // get the subjects from the database
-  const subjects = await getSubjects(userEmail);
+  // get the upcoming subjects from the database
+  const upcomingSubjects = await getUpcomingSubjects({
+    userEmail,
+  });
   // get the settings from the database
   const settings = await getSettings(userEmail);
 
@@ -33,7 +37,7 @@ export default async function DisplaySubjects({
   return (
     <div>
       <div className="mb-10 mt-10 flex flex-col items-center gap-7 max-[800px]:gap-4">
-        {subjects!.map((subject, index) => (
+        {upcomingSubjects!.map((subject, index) => (
           <div
             key={index}
             className={cn(

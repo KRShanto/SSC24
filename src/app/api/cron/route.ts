@@ -6,6 +6,7 @@ import moment from "moment";
 import { sendEmail } from "@/lib/sendEmail";
 import { getSettings } from "@/lib/getSettings";
 import { headers } from "next/headers";
+import { getUpcomingSubjects } from "@/lib/getUpcomingSubjects";
 
 // Send email to all users to let them know about their progress and upcoming exams
 export async function GET() {
@@ -30,31 +31,44 @@ export async function GET() {
     // If email notification is disabled, skip this user
     if (!settings.emailNotification) continue;
 
-    // Get all subjects for this user
-    const subjects = await getSubjects(user.email, false);
+    // // Get all subjects for this user
+    // const subjects = await getSubjects(user.email, false);
 
-    // If there's no subject, skip this user
-    if (!subjects) continue;
+    // // If there's no subject, skip this user
+    // if (!subjects) continue;
 
-    // Add the date of each subject to the subject object
-    const subjectsWithDate = subjects.map((subject) => {
-      const subjectWithDate = SUBJECTS.find(
-        (subjectWithDate) => subjectWithDate.name === subject.name,
-      );
-      return { ...subjectWithDate, ...subject };
+    // // Add the date of each subject to the subject object
+    // const subjectsWithDate = subjects.map((subject) => {
+    //   const subjectWithDate = SUBJECTS.find(
+    //     (subjectWithDate) => subjectWithDate.name === subject.name,
+    //   );
+    //   return { ...subjectWithDate, ...subject };
+    // });
+
+    // // Get today's date
+    // const today = new Date();
+    // today.setHours(0, 0, 0, 0);
+
+    // // Find all upcoming subjects
+    // const upcomingSubjects = subjectsWithDate.filter((subject) => {
+    //   if (subject && subject.date) {
+    //     return subject.date.getTime() >= today.getTime();
+    //   }
+    //   return false;
+    // });
+
+    // Get the upcoming subjects for this user
+    const upcomingSubjects = await getUpcomingSubjects({
+      userEmail: user.email,
+      shouldRedirect: false,
+      startingHour0: true,
     });
 
-    // Get today's date
+    // if there's no upcoming subject, skip this user
+    if (!upcomingSubjects) continue;
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    // Find all upcoming subjects
-    const upcomingSubjects = subjectsWithDate.filter((subject) => {
-      if (subject && subject.date) {
-        return subject.date.getTime() >= today.getTime();
-      }
-      return false;
-    });
 
     // Find if there's any subject today
     const subjectToday = upcomingSubjects.find((subject) => {

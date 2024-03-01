@@ -1,7 +1,6 @@
 "use client";
 
 import { useFormErrorStore } from "@/stores/form-error";
-import { register } from "../../../actions/register";
 import { useRouter } from "next/navigation";
 import { Submit } from "@/components/Form";
 import { firebaseAuth, db } from "@/lib/firebase";
